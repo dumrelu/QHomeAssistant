@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/QHomeAssistant">
+        <file>qmldir</file>
+        <file>QmlType.qml</file>
+    </qresource>
+</RCC>
