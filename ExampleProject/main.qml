@@ -15,14 +15,32 @@ Window {
             source: "image://mdi/light"
         }
 
-        Text {
-            text: HomeAssistant.state("light.lampa") + ", " + HomeAssistant.state_attr("light.lampa", "brightness")
-        }
-
         Button {
             text: "click me"
             onClicked: {
                 impl.callService("light.turn_off", "light.lampa", {});
+            }
+        }
+
+        LightSlider {
+            entityId: "light.lampa"
+        }
+
+        SensorsView {
+            model: ListModel {
+                ListElement {
+                    entityId: "sensor.air_purifier_humidity"
+                }
+
+                ListElement {
+                    entityId: "sensor.daikinap02467_inside_temperature"
+                    name: qsTr("Inside temperatur custom name pretty long")
+                    icon: "image://mdi/cloud"
+                }
+
+                ListElement {
+                    entityId: "binary_sensor.lumi_lumi_sensor_magnet_aq2_on_off"
+                }
             }
         }
     }

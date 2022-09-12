@@ -39,6 +39,16 @@ Item {
             data = {};
         }
 
-        cpp.callService(service, entity_id, data);
+        impl.callService(service, entity_id, data);
+    }
+
+    function update_local_state(entity_id, localState)
+    {
+        impl.updateLocalState(entity_id, localState);
+    }
+
+    function update_local_attr(entity_id, attributeName, value)
+    {
+        impl.updateLocalAttr(entity_id, attributeName, value);
     }
 }

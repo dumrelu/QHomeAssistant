@@ -2,6 +2,9 @@
     <qresource prefix="/QHomeAssistant">
         <file>qmldir</file>
         <file>HomeAssistant.qml</file>
+        <file>ColoredImage.qml</file>
+        <file>LightSlider.qml</file>
+        <file>SensorsView.qml</file>
         <file>icons/light.svg</file>
     </qresource>
 </RCC>
