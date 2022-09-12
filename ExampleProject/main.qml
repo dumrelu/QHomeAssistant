@@ -9,17 +9,22 @@ Window {
     visible: true
     title: qsTr("Hello World")
 
+    Rectangle {
+        anchors.fill: parent
+        color: "pink"
+    }
+
 
     Column {
         Image {
             source: "image://mdi/light"
         }
 
-        Button {
-            text: "click me"
-            onClicked: {
-                impl.callService("light.turn_off", "light.lampa", {});
-            }
+        BusyIndicator {
+            visible: true
+            running: true
+            width: 100
+            height: 100
         }
 
         LightSlider {

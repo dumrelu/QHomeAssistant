@@ -40,6 +40,8 @@ private:
     QString m_url;
     QByteArray m_token;
 
+    QTimer m_pollingTimer;
+
     QNetworkReply* m_getStatesReply = nullptr;
     QByteArray m_statesData;
 };

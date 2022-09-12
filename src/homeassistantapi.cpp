@@ -11,13 +11,12 @@ HomeAssistantApi::HomeAssistantApi(QObject *parent)
     , m_url{ QHomeAssistantPlugin::g_url }
     , m_token{ QHomeAssistantPlugin::g_token }
 {
+    connect(&m_pollingTimer, &QTimer::timeout, this, &HomeAssistantApi::fetchStates);
 }
 
 void HomeAssistantApi::startPolling()
 {
-    auto* timer = new QTimer{ this };
-    connect(timer, &QTimer::timeout, this, &HomeAssistantApi::fetchStates);
-    timer->start(1000); //TODO: configurable and ensure called only once
+    m_pollingTimer.start(1000);
 }
 
 void HomeAssistantApi::fetchStates()

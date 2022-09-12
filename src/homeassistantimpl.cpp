@@ -28,6 +28,8 @@ void HomeAssistantImpl::updateLocalState(QString entityId, QString state)
         m_states.insert(entityId, currentState);
 
         m_localStateOverrides[entityId] = m_numberOfUpdatesToIgnore;
+
+        m_api.startPolling();
     }
 }
 
@@ -42,6 +44,8 @@ void HomeAssistantImpl::updateLocalAttr(QString entityId, QString attributeName,
         m_states.insert(entityId, currentState);
 
         m_localStateOverrides[entityId] = m_numberOfUpdatesToIgnore;
+
+        m_api.startPolling();
     }
 }
 
