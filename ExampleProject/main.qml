@@ -11,4 +11,8 @@ Window {
     QmlType {
 
     }
+
+    Image {
+        source: "image://mdi/light"
+    }
 }
