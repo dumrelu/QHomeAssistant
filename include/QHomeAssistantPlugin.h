@@ -5,8 +5,8 @@
 
 class QHomeAssistantPlugin {
 public:
-    static bool initialize(QQmlEngine& engine, QString homeAssistantUrl, QString homeAssistantToken);
+    static bool initialize(QQmlEngine& engine, QString homeAssistantUrl, QByteArray homeAssistantToken);
 
     static QString g_url;
-    static QString g_token;
+    static QByteArray g_token;
 };

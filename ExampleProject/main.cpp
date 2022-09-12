@@ -7,7 +7,9 @@
 
 #include "QHomeAssistantPlugin.h"
 
-QString read_file(QString filename)
+#include "homeassistantapi.h"
+
+QByteArray read_file(QString filename)
 {
     QFile file{ filename };
     if(!file.open(QFile::ReadOnly | QFile::Text))
@@ -40,6 +42,13 @@ int main(int argc, char *argv[])
     auto haUrl = read_file(exampleProjectDir + "/url.txt");
     auto haToken = read_file(exampleProjectDir + "/token.txt");
     QHomeAssistantPlugin::initialize(engine, haUrl, haToken);
+
+    HomeAssistantApi api;
+    api.fetchState("light.lampa");
+    QObject::connect(&api, &HomeAssistantApi::stateChanged, [](QString entityId, QVariantMap state)
+    {
+        qWarning() << "State changed: " << entityId;
+    });
 
     engine.load(url);
 

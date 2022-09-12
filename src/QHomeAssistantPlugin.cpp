@@ -3,9 +3,9 @@
 #include "homeassistantimageprovider.h"
 
 QString QHomeAssistantPlugin::g_url;
-QString QHomeAssistantPlugin::g_token;
+QByteArray QHomeAssistantPlugin::g_token;
 
-bool QHomeAssistantPlugin::initialize(QQmlEngine &engine, QString homeAssistantUrl, QString homeAssistantToken)
+bool QHomeAssistantPlugin::initialize(QQmlEngine &engine, QString homeAssistantUrl, QByteArray homeAssistantToken)
 {
     g_url = homeAssistantUrl;
     g_token = homeAssistantToken;
