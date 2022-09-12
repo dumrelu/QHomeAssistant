@@ -53,3 +53,8 @@ compile_commands.json
 
 # Build dir
 build/*
+
+# Token and url files
+token.txt
+url.txt
+

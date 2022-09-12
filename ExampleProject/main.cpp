@@ -2,6 +2,8 @@
 #include <QQmlApplicationEngine>
 
 #include <QFile>
+#include <QFileInfo>
+#include <QDir>
 
 #include "QHomeAssistantPlugin.h"
 
@@ -10,7 +12,7 @@ QString read_file(QString filename)
     QFile file{ filename };
     if(!file.open(QFile::ReadOnly | QFile::Text))
     {
-        qFatal("Could not read file");
+        qFatal("Could not read file %s", filename.toStdString().c_str());
         return {};
     }
 
@@ -32,7 +34,13 @@ int main(int argc, char *argv[])
             QCoreApplication::exit(-1);
     }, Qt::QueuedConnection);
 
-    QHomeAssistantPlugin::initialize(engine, )
+    QFileInfo currentSrcFile{__FILE__};
+    auto exampleProjectDir = currentSrcFile.dir().absolutePath();
+
+    auto haUrl = read_file(exampleProjectDir + "/url.txt");
+    auto haToken = read_file(exampleProjectDir + "/token.txt");
+    QHomeAssistantPlugin::initialize(engine, haUrl, haToken);
+
     engine.load(url);
 
     return app.exec();
