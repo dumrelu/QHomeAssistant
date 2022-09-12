@@ -12,6 +12,16 @@ HomeAssistantApi::HomeAssistantApi(QObject *parent)
 {
 }
 
+void HomeAssistantApi::trackState(QString entityId)
+{
+    if(!m_trackedStates.contains(entityId))
+    {
+        m_trackedStates.insert(entityId);
+
+        fetchState(entityId);
+    }
+}
+
 void HomeAssistantApi::fetchState(QString entityId)
 {
     auto req = request(m_url + "/api/states/" + entityId);

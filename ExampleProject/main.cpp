@@ -44,7 +44,8 @@ int main(int argc, char *argv[])
     QHomeAssistantPlugin::initialize(engine, haUrl, haToken);
 
     HomeAssistantApi api;
-    api.fetchState("light.lampa");
+    api.trackState("light.lampa");
+    api.trackState("sensor.air_purifier_humidity");
     QObject::connect(&api, &HomeAssistantApi::stateChanged, [](QString entityId, QVariantMap state)
     {
         qWarning() << "State changed: " << entityId;

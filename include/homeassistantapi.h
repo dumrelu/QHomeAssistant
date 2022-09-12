@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QVariant>
+#include <QSet>
 
 #include <QNetworkAccessManager>
 #include <QNetworkRequest>
@@ -14,13 +15,15 @@ class HomeAssistantApi : public QObject
 public:
     explicit HomeAssistantApi(QObject *parent = nullptr);
 
-    void fetchState(QString entityId);
+    void trackState(QString entityId);
 
 signals:
     void error(QString errorMessage);
     void stateChanged(QString entityId, QVariantMap state);
 
 private:
+    void fetchState(QString entityId);
+
     void onError(QNetworkReply::NetworkError code);
     void onFinishedGetState();
 
@@ -31,6 +34,8 @@ private:
 
     QString m_url;
     QByteArray m_token;
+
+    QSet<QString> m_trackedStates;
 };
 
 #endif // HOMEASSISTANTAPI_H
