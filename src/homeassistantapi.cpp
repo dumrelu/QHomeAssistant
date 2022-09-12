@@ -11,13 +11,18 @@ HomeAssistantApi::HomeAssistantApi(QObject *parent)
     , m_url{ QHomeAssistantPlugin::g_url }
     , m_token{ QHomeAssistantPlugin::g_token }
 {
+}
+
+void HomeAssistantApi::startPolling()
+{
     auto* timer = new QTimer{ this };
     connect(timer, &QTimer::timeout, this, &HomeAssistantApi::fetchStates);
-    timer->start(1000); //TODO: configurable
+    timer->start(1000); //TODO: configurable and ensure called only once
 }
 
 void HomeAssistantApi::fetchStates()
 {
+    qDebug() << __FUNCTION__;
     if(m_getStatesReply)
     {
         qWarning() << "fetchStates already in progress";
@@ -35,6 +40,27 @@ void HomeAssistantApi::fetchStates()
         }
     );
     connect(m_getStatesReply, &QNetworkReply::finished, this, &HomeAssistantApi::onFinishedGetStates);
+}
+
+void HomeAssistantApi::callService(QString service, QString entityId, QVariantMap data)
+{
+    qDebug() << __FUNCTION__ << "(" << service << ", " << entityId << ", " << data << ")";
+
+    if(!service.contains("."))
+    {
+        qWarning() << "Invalid service";
+        return;
+    }
+
+    auto json = QJsonObject::fromVariantMap(data);
+    json["entity_id"] = entityId;
+
+    auto request = prepareRequest(m_url + "/api/services/" + service.replace(".", "/"));
+
+
+    auto* reply = m_manager.post(request, QJsonDocument{ json }.toJson(QJsonDocument::Compact));
+    prepareReply(reply);
+    connect(reply, &QNetworkReply::finished, reply, &QObject::deleteLater);
 }
 
 void HomeAssistantApi::onError(QNetworkReply::NetworkError code)

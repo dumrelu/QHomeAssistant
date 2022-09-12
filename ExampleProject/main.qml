@@ -1,5 +1,6 @@
-import QtQuick 2.15
-import QtQuick.Window 2.15
+import QtQuick 2.12
+import QtQuick.Window 2.12
+import QtQuick.Controls 2.12
 import QHomeAssistant 1.0
 
 Window {
@@ -23,6 +24,13 @@ Window {
 
         Text {
             text: impl.states["light.lampa"]["attributes"]["brightness"]
+        }
+
+        Button {
+            text: "click me"
+            onClicked: {
+                impl.callService("light.turn_off", "light.lampa", {});
+            }
         }
     }
 }

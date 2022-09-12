@@ -6,11 +6,17 @@ HomeAssistantImpl::HomeAssistantImpl(QObject *parent)
     connect(&m_api, &HomeAssistantApi::statesReceived, this, &HomeAssistantImpl::onStatesReceived);
 
     m_api.fetchStates();
+    m_api.startPolling();
 }
 
 QQmlPropertyMap *HomeAssistantImpl::states()
 {
     return &m_states;
+}
+
+void HomeAssistantImpl::callService(QString service, QString entityId, QVariantMap data)
+{
+    m_api.callService(service, entityId, data);
 }
 
 void HomeAssistantImpl::onStatesReceived(QJsonArray stateArray)

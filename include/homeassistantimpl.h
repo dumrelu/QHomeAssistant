@@ -16,6 +16,8 @@ public:
 
     QQmlPropertyMap* states();
 
+    Q_INVOKABLE void callService(QString service, QString entityId, QVariantMap data);
+
 signals:
     void statesChanged();
 

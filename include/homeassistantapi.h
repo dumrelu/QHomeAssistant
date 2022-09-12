@@ -19,8 +19,10 @@ class HomeAssistantApi : public QObject
 public:
     explicit HomeAssistantApi(QObject *parent = nullptr);
 
-    // Already called automatically at an interval
+    void startPolling();
     void fetchStates();
+
+    void callService(QString service, QString entityId, QVariantMap data);
 
 signals:
     void error(QString errorMessage);
