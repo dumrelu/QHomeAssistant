@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QVariant>
 #include <QSet>
+#include <QTimer>
 
 #include <QNetworkAccessManager>
 #include <QNetworkRequest>
@@ -22,10 +23,12 @@ signals:
     void stateChanged(QString entityId, QVariantMap state);
 
 private:
+    void checkForUpdates();
     void fetchState(QString entityId);
 
     void onError(QNetworkReply::NetworkError code);
     void onFinishedGetState();
+    void onFinishedGetUpdates();
 
     QNetworkRequest request(QString url) const;
     void handleError(QNetworkReply* reply) const;
@@ -35,7 +38,9 @@ private:
     QString m_url;
     QByteArray m_token;
 
-    QSet<QString> m_trackedStates;
+    QSet<QString> m_trackedEntities;
+    QString m_trackedEntitiesString;
+    QDateTime m_lastUpdateCheck = QDateTime::currentDateTimeUtc();
 };
 
 #endif // HOMEASSISTANTAPI_H
