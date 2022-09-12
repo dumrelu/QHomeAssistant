@@ -10,37 +10,36 @@
 #include <QNetworkRequest>
 #include <QNetworkReply>
 
+#include <QJsonArray>
+#include <QJsonObject>
+
 class HomeAssistantApi : public QObject
 {
     Q_OBJECT
 public:
     explicit HomeAssistantApi(QObject *parent = nullptr);
 
-    void trackState(QString entityId);
+    // Already called automatically at an interval
+    void fetchStates();
 
 signals:
     void error(QString errorMessage);
-    void stateChanged(QString entityId, QVariantMap state);
+    void statesReceived(QJsonArray stateArray);
 
 private:
-    void checkForUpdates();
-    void fetchState(QString entityId);
-
     void onError(QNetworkReply::NetworkError code);
-    void onFinishedGetState();
-    void onFinishedGetUpdates();
+    void onFinishedGetStates();
 
-    QNetworkRequest request(QString url) const;
-    void handleError(QNetworkReply* reply) const;
+    QNetworkRequest prepareRequest(QString url) const;
+    void prepareReply(QNetworkReply* reply) const;
 
     QNetworkAccessManager m_manager;
 
     QString m_url;
     QByteArray m_token;
 
-    QSet<QString> m_trackedEntities;
-    QString m_trackedEntitiesString;
-    QDateTime m_lastUpdateCheck = QDateTime::currentDateTimeUtc();
+    QNetworkReply* m_getStatesReply = nullptr;
+    QByteArray m_statesData;
 };
 
 #endif // HOMEASSISTANTAPI_H

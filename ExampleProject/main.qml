@@ -12,7 +12,17 @@ Window {
 
     }
 
-    Image {
-        source: "image://mdi/light"
+    HomeAssistantImpl {
+        id: impl
+    }
+
+    Column {
+        Image {
+            source: "image://mdi/light"
+        }
+
+        Text {
+            text: impl.states["light.lampa"]["attributes"]["brightness"]
+        }
     }
 }

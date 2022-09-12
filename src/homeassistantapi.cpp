@@ -11,50 +11,30 @@ HomeAssistantApi::HomeAssistantApi(QObject *parent)
     , m_url{ QHomeAssistantPlugin::g_url }
     , m_token{ QHomeAssistantPlugin::g_token }
 {
-    checkForUpdates();
-
     auto* timer = new QTimer{ this };
-    connect(timer, &QTimer::timeout, this, &HomeAssistantApi::checkForUpdates);
+    connect(timer, &QTimer::timeout, this, &HomeAssistantApi::fetchStates);
     timer->start(1000); //TODO: configurable
 }
 
-void HomeAssistantApi::trackState(QString entityId)
+void HomeAssistantApi::fetchStates()
 {
-    if(!m_trackedEntities.contains(entityId))
+    if(m_getStatesReply)
     {
-        m_trackedEntities.insert(entityId);
-        m_trackedEntitiesString = QStringList{ m_trackedEntities.values() }.join(",");
-
-        fetchState(entityId);
-    }
-}
-
-void HomeAssistantApi::checkForUpdates()
-{
-    if(m_trackedEntities.size() == 0)
-    {
+        qWarning() << "fetchStates already in progress";
         return;
     }
 
-    auto req = request(m_url + "/api/history/period/"
-                       + m_lastUpdateCheck.toString(Qt::ISODate)
-                       + "?minimal_response&no_attributes&significant_changes_only&filter_entity_id="
-                       + m_trackedEntitiesString);
-    m_lastUpdateCheck = QDateTime::currentDateTimeUtc();
+    auto request = prepareRequest(m_url + "/api/states");
 
-    auto* reply = m_manager.get(req);
-    handleError(reply);
-    reply->setReadBufferSize(0);
-    connect(reply, &QNetworkReply::finished, this, &HomeAssistantApi::onFinishedGetUpdates);
-}
-
-void HomeAssistantApi::fetchState(QString entityId)
-{
-    auto req = request(m_url + "/api/states/" + entityId);
-
-    auto* reply = m_manager.get(req);
-    handleError(reply);
-    connect(reply, &QNetworkReply::finished, this, &HomeAssistantApi::onFinishedGetState);
+    m_getStatesReply = m_manager.get(request);
+    prepareReply(m_getStatesReply);
+    connect(m_getStatesReply, &QNetworkReply::readyRead, this,
+        [this]()
+        {
+            m_statesData.append(m_getStatesReply->readAll());
+        }
+    );
+    connect(m_getStatesReply, &QNetworkReply::finished, this, &HomeAssistantApi::onFinishedGetStates);
 }
 
 void HomeAssistantApi::onError(QNetworkReply::NetworkError code)
@@ -63,71 +43,32 @@ void HomeAssistantApi::onError(QNetworkReply::NetworkError code)
     emit error("Network error. TBD");
 }
 
-void HomeAssistantApi::onFinishedGetState()
+void HomeAssistantApi::onFinishedGetStates()
 {
-    auto* reply = qobject_cast<QNetworkReply*>(sender());
-    if(!reply)
+    if(!m_getStatesReply)
     {
-        qWarning() << "Invalid cast for reply";
+        qWarning() << "Invalid call";
         return;
     }
 
-    auto json = QJsonDocument::fromJson(reply->readAll());
-    if(json.isObject())
+    if(m_getStatesReply->error() != QNetworkReply::NoError)
     {
-        auto state = json.object().toVariantMap();
-        auto entityId = state["entity_id"].toString();
-
-        emit stateChanged(entityId, state);
-    }
-    else
-    {
-        qWarning() << "Could not parse json";
-    }
-}
-
-void HomeAssistantApi::onFinishedGetUpdates()
-{
-    auto* reply = qobject_cast<QNetworkReply*>(sender());
-    if(!reply)
-    {
-        qWarning() << "Invalid cast for reply";
+        qWarning() << "Reply network error";
         return;
     }
 
-    qWarning() << __PRETTY_FUNCTION__;
-
-    auto json = QJsonDocument::fromJson(reply->readAll());
-//    qWarning() << json.toJson(QJsonDocument::Compact).toStdString().c_str();
+    auto json = QJsonDocument::fromJson(m_statesData);
     if(json.isArray())
     {
-        auto array = json.array();
-        for(auto element : array)
-        {
-            if(element.isArray())
-            {
-                auto elementArray = element.toArray();
-
-                if(elementArray.size() > 1)
-                {
-                    auto object = element.toArray()[0].toObject();
-                    auto entityId = object["entity_id"].toString();
-
-                    if(m_trackedEntities.contains(entityId))
-                    {
-                        fetchState(entityId);
-                    }
-                }
-            }
-        }
+        emit statesReceived(json.array());
     }
-    else
-    {
-        qWarning() << "Could not parse json";
-    }
+
+    m_statesData.clear();
+    m_getStatesReply->deleteLater();
+    m_getStatesReply = nullptr;
 }
 
-QNetworkRequest HomeAssistantApi::request(QString url) const
+QNetworkRequest HomeAssistantApi::prepareRequest(QString url) const
 {
     QNetworkRequest request;
     request.setUrl(QUrl{ url });
@@ -137,8 +78,9 @@ QNetworkRequest HomeAssistantApi::request(QString url) const
     return request;
 }
 
-void HomeAssistantApi::handleError(QNetworkReply *reply) const
+void HomeAssistantApi::prepareReply(QNetworkReply *reply) const
 {
+    reply->setReadBufferSize(0);
 #if QT_VERSION < QT_VERSION_CHECK(5,15,0)
     connect(reply, qOverload<QNetworkReply::NetworkError>(&QNetworkReply::error), this, &HomeAssistantApi::onError);
 #else

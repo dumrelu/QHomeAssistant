@@ -43,14 +43,6 @@ int main(int argc, char *argv[])
     auto haToken = read_file(exampleProjectDir + "/token.txt");
     QHomeAssistantPlugin::initialize(engine, haUrl, haToken);
 
-    HomeAssistantApi api;
-    api.trackState("light.lampa");
-    api.trackState("sensor.air_purifier_humidity");
-    QObject::connect(&api, &HomeAssistantApi::stateChanged, [](QString entityId, QVariantMap state)
-    {
-        qWarning() << "State changed: " << entityId;
-    });
-
     engine.load(url);
 
     return app.exec();

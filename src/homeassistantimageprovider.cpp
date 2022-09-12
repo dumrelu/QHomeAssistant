@@ -14,7 +14,7 @@ QImage HomeAssistantImageProvider::requestImage(const QString &id, QSize *size, 
     const auto width = requestedSize.width() >= 0 ? requestedSize.width() : 128;
     const auto height = requestedSize.height() >= 0 ? requestedSize.height() : 128;
 
-    QImage image{ QSize{ width, height }, QImage::Format_ARGB32_Premultiplied };
+    QImage image{ QSize{ width, height }, QImage::Format_ARGB32 };
     QPainter imagePainter{ &image };
     QSvgRenderer svgRenderer{ QString{":/QHomeAssistant/icons/"} + id + ".svg" };
     if(svgRenderer.isValid())

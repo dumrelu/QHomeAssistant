@@ -23,6 +23,7 @@ add_library(QHomeAssistant SHARED
     include/QHomeAssistantPlugin.h src/QHomeAssistantPlugin.cpp
     include/homeassistantimageprovider.h src/homeassistantimageprovider.cpp
     include/homeassistantapi.h src/homeassistantapi.cpp
+    include/homeassistantimpl.h src/homeassistantimpl.cpp
 )
 
 if(BUILD_EXAMPLE_PROJECT)
