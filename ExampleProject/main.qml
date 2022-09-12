@@ -9,13 +9,6 @@ Window {
     visible: true
     title: qsTr("Hello World")
 
-    QmlType {
-
-    }
-
-    HomeAssistantImpl {
-        id: impl
-    }
 
     Column {
         Image {
@@ -23,7 +16,7 @@ Window {
         }
 
         Text {
-            text: impl.states["light.lampa"]["attributes"]["brightness"]
+            text: HomeAssistant.state("light.lampa") + ", " + HomeAssistant.state_attr("light.lampa", "brightness")
         }
 
         Button {

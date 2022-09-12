@@ -1,7 +1,7 @@
 <RCC>
     <qresource prefix="/QHomeAssistant">
         <file>qmldir</file>
-        <file>QmlType.qml</file>
+        <file>HomeAssistant.qml</file>
         <file>icons/light.svg</file>
     </qresource>
 </RCC>
