@@ -4,6 +4,7 @@ Item {
     id: root
 
     property alias source: image.source
+    property alias sourceSize: image.sourceSize
     property color color: "black"
     property real intensityFactor: 1.0
     width: 48

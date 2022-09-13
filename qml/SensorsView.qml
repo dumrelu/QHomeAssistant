@@ -7,13 +7,13 @@ ListView {
     id: root
 
     implicitWidth: 250
-    implicitHeight: 500
+    implicitHeight: 250
 
     delegate: Item {
         width: parent.width
         height: Math.max(image.height)
 
-        Image {
+        ColoredImage {
             id: image
             anchors.left: parent.left
             anchors.verticalCenter: parent.verticalCenter

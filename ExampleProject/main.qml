@@ -48,5 +48,29 @@ Window {
                 }
             }
         }
+
+        Button {
+            icon.source: "image://mdi/cloud"
+            icon.width: 48
+            icon.height: 48
+
+            text: qsTr("Day Time")
+
+            onClicked: {
+                HomeAssistant.call_service("scene.turn_on", "scene.day_time");
+            }
+        }
+
+        Button {
+            icon.source: "image://mdi/cloud"
+            icon.width: 48
+            icon.height: 48
+
+            text: qsTr("Before Bed")
+
+            onClicked: {
+                HomeAssistant.call_service("scene.turn_on", "scene.before_bed");
+            }
+        }
     }
 }
