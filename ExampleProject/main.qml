@@ -4,10 +4,10 @@ import QtQuick.Controls 2.12
 import QHomeAssistant 1.0
 
 Window {
-    width: 640
-    height: 480
+    width: 600
+    height: 1024
     visible: true
-    title: qsTr("Hello World")
+    title: qsTr("Example Project")
 
     Rectangle {
         anchors.fill: parent
