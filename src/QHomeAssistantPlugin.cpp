@@ -10,6 +10,8 @@ QByteArray QHomeAssistantPlugin::g_token;
 
 bool QHomeAssistantPlugin::initialize(QQmlEngine &engine, QString homeAssistantUrl, QByteArray homeAssistantToken)
 {
+    Q_INIT_RESOURCE(qhomeassistant);
+
     g_url = homeAssistantUrl;
     g_token = homeAssistantToken;
 

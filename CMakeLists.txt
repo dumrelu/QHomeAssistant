@@ -17,8 +17,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Core Quick Svg)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Quick Svg)
 
-add_library(QHomeAssistant SHARED
-    qml/qml.qrc
+add_library(QHomeAssistant STATIC
+    qml/qhomeassistant.qrc
 
     include/QHomeAssistantPlugin.h src/QHomeAssistantPlugin.cpp
     include/homeassistantimageprovider.h src/homeassistantimageprovider.cpp
