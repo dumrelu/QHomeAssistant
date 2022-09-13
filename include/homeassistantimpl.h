@@ -11,10 +11,13 @@ class HomeAssistantImpl : public QObject
     Q_OBJECT
 
     Q_PROPERTY(QQmlPropertyMap* states READ states NOTIFY statesChanged)
+
+    Q_PROPERTY(bool isQt5 READ isQt5 CONSTANT)
 public:
     explicit HomeAssistantImpl(QObject *parent = nullptr);
 
     QQmlPropertyMap* states();
+    bool isQt5() const;
 
     Q_INVOKABLE void callService(QString service, QString entityId, QVariantMap data);
     Q_INVOKABLE void updateLocalState(QString entityId, QString state);

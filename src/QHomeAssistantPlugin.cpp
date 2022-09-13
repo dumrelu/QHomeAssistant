@@ -3,6 +3,8 @@
 #include "homeassistantimageprovider.h"
 #include "homeassistantimpl.h"
 
+#include <QQmlContext>
+
 QString QHomeAssistantPlugin::g_url;
 QByteArray QHomeAssistantPlugin::g_token;
 

@@ -6,6 +6,8 @@ import QHomeAssistant 1.0
 Item {
     id: root
 
+    property alias isQt5: impl.isQt5
+
     HomeAssistantImpl {
         id: impl
     }

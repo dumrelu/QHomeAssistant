@@ -6,5 +6,11 @@
         <file>LightSlider.qml</file>
         <file>SensorsView.qml</file>
         <file>icons/light.svg</file>
+        <file>Qt5ColorOverlay.qml</file>
+        <file>Qt6ColorOverlay.qml</file>
+        <file>icons/cloud.svg</file>
+        <file>icons/fan.svg</file>
+        <file>icons/floor_lamp.svg</file>
+        <file>icons/lightbulb.svg</file>
     </qresource>
 </RCC>

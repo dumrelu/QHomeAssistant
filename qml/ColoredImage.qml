@@ -2,7 +2,7 @@ import QtQuick 2.0
 
 //TODO
 //import QtGraphicalEffects 1.12
-import Qt5Compat.GraphicalEffects
+//import Qt5Compat.GraphicalEffects
 
 Item {
     id: root
@@ -22,9 +22,10 @@ Item {
         visible: false
     }
 
-    ColorOverlay {
+    Loader {
+        id: colorOverlayLoader
         anchors.fill: image
-        source: image
-        color: Qt.lighter(root.color, root.intensityFactor < 0.1 ? 0.1 : root.intensityFactor)
+
+        source: HomeAssistant.isQt5 ? "Qt5ColorOverlay.qml" : "Qt6ColorOverlay.qml"
     }
 }

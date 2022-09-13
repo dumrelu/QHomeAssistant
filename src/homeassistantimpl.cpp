@@ -14,6 +14,14 @@ QQmlPropertyMap *HomeAssistantImpl::states()
     return &m_states;
 }
 
+bool HomeAssistantImpl::isQt5() const
+{
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+    return false;
+#endif
+    return true;
+}
+
 void HomeAssistantImpl::callService(QString service, QString entityId, QVariantMap data)
 {
     m_api.callService(service, entityId, data);
