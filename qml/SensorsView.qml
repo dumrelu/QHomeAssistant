@@ -65,7 +65,12 @@ ListView {
                 var state = HomeAssistant.state(model.entityId);
                 if(state !== undefined)
                 {
-                    var unitOfMeasure = HomeAssistant.state_attr(model.entityId, "unit_of_measurement");
+                    var unitOfMeasure = "";
+                    if(state !== "unavailable")
+                    {
+                        unitOfMeasure = HomeAssistant.state_attr(model.entityId, "unit_of_measurement");
+                    }
+
                     return state + (unitOfMeasure !== undefined ? unitOfMeasure : "");
                 }
                 return "N/A"
