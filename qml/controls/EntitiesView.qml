@@ -40,6 +40,7 @@ ListView {
     }
 
     property Component lightView: LightSlider {
+        width: root.width - 10
         entityId: _model.entityId
     }
 
@@ -67,6 +68,7 @@ ListView {
             height: 48
             sourceSize: Qt.size(width, height)
             source: model.icon ? model.icon : ""
+            visible: !root.lightDomains.includes(delegate.domain)
         }
 
         Label {

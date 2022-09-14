@@ -5,7 +5,7 @@
         <file>controls/ColoredImage.qml</file>
         <file>controls/LightSlider.qml</file>
         <file>controls/OnOffSwitch.qml</file>
-        <file>EntitiesView.qml</file>
+        <file>controls/EntitiesView.qml</file>
         <file>icons/light.svg</file>
         <file>internal/Qt5ColorOverlay.qml</file>
         <file>internal/Qt6ColorOverlay.qml</file>
@@ -16,5 +16,6 @@
         <file>Card.qml</file>
         <file>internal/Qt5DropShadow.qml</file>
         <file>internal/Qt6DropShadow.qml</file>
+        <file>EntitiesCard.qml</file>
     </qresource>
 </RCC>
