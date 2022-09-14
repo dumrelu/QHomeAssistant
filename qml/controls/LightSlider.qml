@@ -98,14 +98,15 @@ Item {
             id: callServiceTimer
             interval: 100
             onTriggered: {
-                var roundedValue = Math.round(slider.value);
-                HomeAssistant.call_service("light.turn_on", entityId, {"brightness": roundedValue});
-                HomeAssistant.update_local_state(entityId, roundedValue !== 0 ? "on" : "off");
-                HomeAssistant.update_local_attr(entityId, "brightness", roundedValue);
+                HomeAssistant.call_service("light.turn_on", entityId, {"brightness": Math.round(slider.value)});
             }
         }
 
         onMoved: {
+            var roundedValue = Math.round(slider.value);
+            HomeAssistant.update_local_state(entityId, roundedValue !== 0 ? "on" : "off");
+            HomeAssistant.update_local_attr(entityId, "brightness", roundedValue);
+
             callServiceTimer.start();
         }
     }
