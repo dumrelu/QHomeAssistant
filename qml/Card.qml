@@ -6,7 +6,9 @@ Item {
     id: root
 
     default property alias theContent: contentItem.data
+
     property alias title: titleText.text
+    property alias titleFont: titleText.font
 
     implicitWidth: Math.max(
                        titleText.implicitWidth + titleText.anchors.leftMargin + titleText.anchors.rightMargin,
