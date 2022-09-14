@@ -31,7 +31,7 @@ Window {
             entityId: "light.lampa"
         }
 
-        SensorsView {
+        EntitiesView {
             model: ListModel {
                 ListElement {
                     entityId: "sensor.air_purifier_humidity"

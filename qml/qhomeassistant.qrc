@@ -4,7 +4,6 @@
         <file>HomeAssistant.qml</file>
         <file>ColoredImage.qml</file>
         <file>LightSlider.qml</file>
-        <file>SensorsView.qml</file>
         <file>icons/light.svg</file>
         <file>Qt5ColorOverlay.qml</file>
         <file>Qt6ColorOverlay.qml</file>
@@ -13,6 +12,6 @@
         <file>icons/floor_lamp.svg</file>
         <file>icons/lightbulb.svg</file>
         <file>OnOffSwitch.qml</file>
-        <file>EntityView.qml</file>
+        <file>EntitiesView.qml</file>
     </qresource>
 </RCC>

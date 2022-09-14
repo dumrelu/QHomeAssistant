@@ -3,5 +3,5 @@ module QHomeAssistant
 singleton HomeAssistant 1.0 HomeAssistant.qml
 ColoredImage 1.0 ColoredImage.qml
 LightSlider 1.0 LightSlider.qml
-SensorsView 1.0 SensorsView.qml
 OnOffSwitch 1.0 OnOffSwitch.qml
+EntitiesView 1.0 EntitiesView.qml
