@@ -1,4 +1,5 @@
 import QtQuick 2.0
+import QHomeAssistant 1.0
 
 Item {
     id: root
@@ -23,6 +24,6 @@ Item {
         id: colorOverlayLoader
         anchors.fill: image
 
-        source: HomeAssistant.isQt5 ? "Qt5ColorOverlay.qml" : "Qt6ColorOverlay.qml"
+        source: HomeAssistant.isQt5 ? "/QHomeAssistant/internal/Qt5ColorOverlay.qml" : "/QHomeAssistant/internal/Qt6ColorOverlay.qml"
     }
 }
