@@ -13,5 +13,8 @@
         <file>icons/fan.svg</file>
         <file>icons/floor_lamp.svg</file>
         <file>icons/lightbulb.svg</file>
+        <file>Card.qml</file>
+        <file>internal/Qt5DropShadow.qml</file>
+        <file>internal/Qt6DropShadow.qml</file>
     </qresource>
 </RCC>

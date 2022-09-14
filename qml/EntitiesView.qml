@@ -13,11 +13,11 @@ ListView {
     property var sensorDomains: ["sensor", "binary_sensor"]
     property var lightDomains: ["light"]
 
-    property Component sensorView: Text {
+    property Component sensorView: Label {
         id: state
 
-        verticalAlignment: Text.AlignVCenter
-        elide: Text.ElideRight
+        verticalAlignment: Label.AlignVCenter
+        elide: Label.ElideRight
 
         text: {
             var state = HomeAssistant.state(_model.entityId);
@@ -69,7 +69,7 @@ ListView {
             source: model.icon ? model.icon : ""
         }
 
-        Text {
+        Label {
             id: name
 
             anchors.top: parent.top
@@ -78,8 +78,8 @@ ListView {
             anchors.leftMargin: 10
             anchors.right: entityView.left
             anchors.rightMargin: 10
-            verticalAlignment: Text.AlignVCenter
-            elide: Text.ElideRight
+            verticalAlignment: Label.AlignVCenter
+            elide: Label.ElideRight
 
             visible: !root.lightDomains.includes(delegate.domain)
 

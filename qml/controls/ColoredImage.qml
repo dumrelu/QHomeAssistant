@@ -24,6 +24,9 @@ Item {
         id: colorOverlayLoader
         anchors.fill: image
 
+        property var _source: image
+        property color _color: Qt.lighter(root.color, root.intensityFactor < 0.1 ? 0.1 : root.intensityFactor)
+
         source: HomeAssistant.isQt5 ? "/QHomeAssistant/internal/Qt5ColorOverlay.qml" : "/QHomeAssistant/internal/Qt6ColorOverlay.qml"
     }
 }

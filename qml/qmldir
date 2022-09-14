@@ -6,4 +6,5 @@ ColoredImage 1.0 controls/ColoredImage.qml
 LightSlider 1.0 controls/LightSlider.qml
 OnOffSwitch 1.0 controls/OnOffSwitch.qml
 
+Card 1.0 Card.qml
 EntitiesView 1.0 EntitiesView.qml
