@@ -12,5 +12,7 @@
         <file>icons/fan.svg</file>
         <file>icons/floor_lamp.svg</file>
         <file>icons/lightbulb.svg</file>
+        <file>OnOffSwitch.qml</file>
+        <file>EntityView.qml</file>
     </qresource>
 </RCC>
