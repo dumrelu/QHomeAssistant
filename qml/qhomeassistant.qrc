@@ -3,7 +3,6 @@
         <file>qmldir</file>
         <file>HomeAssistant.qml</file>
         <file>controls/ColoredImage.qml</file>
-        <file>controls/LightSlider.qml</file>
         <file>controls/OnOffSwitch.qml</file>
         <file>icons/light.svg</file>
         <file>internal/Qt5ColorOverlay.qml</file>

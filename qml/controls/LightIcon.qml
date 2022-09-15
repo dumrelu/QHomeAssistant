@@ -9,6 +9,8 @@ Rectangle {
     property string entityId: ""
     property alias icon: coloredImage
 
+    signal brightnessUpdated(int newBrightness);
+
     implicitWidth: coloredImage.implicitWidth * 1.5
     implicitHeight: coloredImage.implicitHeight * 1.5
     radius: width / 2
@@ -86,6 +88,7 @@ Rectangle {
                 var newBrightness = mouseArea.baseBrightness + (mouseArea.holdPositionY - mouseArea.mouseY) * 2.5;
                 HomeAssistant.update_local_state(entityId, newBrightness !== 0 ? "on" : "off");
                 HomeAssistant.update_local_attr(entityId, "brightness", newBrightness);
+                root.brightnessUpdated(newBrightness);
 
                 callServiceTimer.start();
             }
@@ -100,12 +103,16 @@ Rectangle {
             {
                 HomeAssistant.call_service("light.turn_off", entityId);
                 HomeAssistant.update_local_state(entityId, "off");
+
+                root.brightnessUpdated(0);
             }
             else
             {
                 HomeAssistant.call_service("light.turn_on", entityId);
                 HomeAssistant.update_local_state(entityId, "on");
                 HomeAssistant.update_local_attr(entityId, "brightness", internal.lastKnownValue);
+
+                root.brightnessUpdated(internal.lastKnownValue);
             }
         }
     }
