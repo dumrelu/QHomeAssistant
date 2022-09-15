@@ -8,8 +8,9 @@ Item {
     property alias sourceSize: image.sourceSize
     property color color: "black"
     property real intensityFactor: 1.0
-    width: 48
-    height: 48
+
+    implicitHeight: 48
+    implicitWidth: 48
 
     Image {
         id: image
