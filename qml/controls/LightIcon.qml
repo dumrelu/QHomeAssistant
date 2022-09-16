@@ -86,6 +86,7 @@ Rectangle {
             if(mouseArea.isHold)
             {
                 var newBrightness = mouseArea.baseBrightness + (mouseArea.holdPositionY - mouseArea.mouseY) * 2.5;
+                newBrightness = Math.min(255, Math.max(0, newBrightness));
                 HomeAssistant.update_local_state(entityId, newBrightness !== 0 ? "on" : "off");
                 HomeAssistant.update_local_attr(entityId, "brightness", newBrightness);
                 root.brightnessUpdated(newBrightness);
@@ -122,9 +123,12 @@ Rectangle {
         modal: true
         visible: mouseArea.isHold
 
-        background: Item {}
+        width: sliderBackground.width
+        height: sliderBackground.height
 
-        leftPadding: parent.width * 1.4
+        background: Item { }
+
+        leftPadding: -(parent.width / 2 + sliderBackground.width)
         bottomPadding: sliderBackground.height
 
         Rectangle {
