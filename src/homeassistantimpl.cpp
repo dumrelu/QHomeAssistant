@@ -22,6 +22,11 @@ bool HomeAssistantImpl::isQt5() const
     return true;
 }
 
+bool HomeAssistantImpl::isLoaded() const
+{
+    return m_isLoaded;
+}
+
 void HomeAssistantImpl::callService(QString service, QString entityId, QVariantMap data)
 {
     m_api.callService(service, entityId, data);
@@ -91,6 +96,12 @@ void HomeAssistantImpl::onStatesReceived(QJsonArray stateArray)
                 m_states.insert(entityId, stateObject);
             }
         }
+    }
+
+    if(!m_isLoaded)
+    {
+        m_isLoaded = true;
+        emit isLoadedChanged();
     }
 }
 

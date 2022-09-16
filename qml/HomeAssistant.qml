@@ -7,6 +7,8 @@ Item {
     id: root
 
     property alias isQt5: impl.isQt5
+    property alias isLoaded: impl.isLoaded
+    property alias states: impl.states
 
     HomeAssistantImpl {
         id: impl
