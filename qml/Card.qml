@@ -63,6 +63,7 @@ Item {
     Item {
         id: contentItem
 
+        //TODO: implicit size of top level child?
         implicitWidth: childrenRect.width
         implicitHeight: childrenRect.height
 

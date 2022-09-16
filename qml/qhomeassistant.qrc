@@ -15,5 +15,9 @@
         <file>internal/Qt5DropShadow.qml</file>
         <file>internal/Qt6DropShadow.qml</file>
         <file>controls/LightIcon.qml</file>
+        <file>icons/bed.svg</file>
+        <file>icons/dark_mode.svg</file>
+        <file>icons/light_mode.svg</file>
+        <file>icons/wb_twilight.svg</file>
     </qresource>
 </RCC>
