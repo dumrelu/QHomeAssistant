@@ -3,7 +3,6 @@
         <file>qmldir</file>
         <file>HomeAssistant.qml</file>
         <file>controls/ColoredImage.qml</file>
-        <file>controls/OnOffSwitch.qml</file>
         <file>icons/light.svg</file>
         <file>internal/Qt5ColorOverlay.qml</file>
         <file>internal/Qt6ColorOverlay.qml</file>
@@ -29,5 +28,13 @@
         <file>icons/security.svg</file>
         <file>icons/shield_with_house.svg</file>
         <file>icons/notification_important.svg</file>
+        <file>controls/SensorInfo.qml</file>
+        <file>icons/door_front.svg</file>
+        <file>icons/door_open.svg</file>
+        <file>icons/window_closed.svg</file>
+        <file>icons/window_open.svg</file>
+        <file>icons/motion_sensor_active.svg</file>
+        <file>icons/motion_sensor_idle.svg</file>
+        <file>icons/motion_sensor_urgent.svg</file>
     </qresource>
 </RCC>

@@ -145,7 +145,13 @@ Card {
                 font.pixelSize: Qt.application.font.pixelSize * 1.5
 
                 color: root.config["pending"].color
-                text: qsTr("Could not arm the alarm due to: ")
+                text: {
+                    if(internal.state === "disarmed")
+                    {
+                        return qsTr("Could not arm the alarm due to: ");
+                    }
+                    return qsTr("Alarm triggered due to: ");
+                }
             }
 
             Repeater {
