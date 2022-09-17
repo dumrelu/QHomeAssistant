@@ -19,5 +19,6 @@
         <file>icons/dark_mode.svg</file>
         <file>icons/light_mode.svg</file>
         <file>icons/wb_twilight.svg</file>
+        <file>icons/done.svg</file>
     </qresource>
 </RCC>
