@@ -48,7 +48,7 @@ Rectangle {
 
         source: "image://mdi/light"
 
-        color: "yellow"
+        color: Material.color(Material.Yellow)
         intensityFactor: {
             var intensity = internal.brightness / 255;
             if(intensity === 0.0)
