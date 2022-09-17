@@ -237,16 +237,19 @@ Card {
                 Layout.alignment: Qt.AlignHCenter
 
                 Button {
+                    font.pixelSize: Qt.application.font.pixelSize * 2
                     text: "1"
                     onClicked: codeLabel.text += text;
                 }
 
                 Button {
+                    font.pixelSize: Qt.application.font.pixelSize * 2
                     text: "2"
                     onClicked: codeLabel.text += text;
                 }
 
                 Button {
+                    font.pixelSize: Qt.application.font.pixelSize * 2
                     text: "3"
                     onClicked: codeLabel.text += text;
                 }
@@ -257,16 +260,19 @@ Card {
 
                 Button {
                     text: "4"
+                    font.pixelSize: Qt.application.font.pixelSize * 2
                     onClicked: codeLabel.text += text;
                 }
 
                 Button {
                     text: "5"
+                    font.pixelSize: Qt.application.font.pixelSize * 2
                     onClicked: codeLabel.text += text;
                 }
 
                 Button {
                     text: "6"
+                    font.pixelSize: Qt.application.font.pixelSize * 2
                     onClicked: codeLabel.text += text;
                 }
             }
@@ -276,16 +282,19 @@ Card {
 
                 Button {
                     text: "7"
+                    font.pixelSize: Qt.application.font.pixelSize * 2
                     onClicked: codeLabel.text += text;
                 }
 
                 Button {
                     text: "8"
+                    font.pixelSize: Qt.application.font.pixelSize * 2
                     onClicked: codeLabel.text += text;
                 }
 
                 Button {
                     text: "9"
+                    font.pixelSize: Qt.application.font.pixelSize * 2
                     onClicked: codeLabel.text += text;
                 }
             }
@@ -300,11 +309,13 @@ Card {
 
                 Button {
                     id: button0
+                    font.pixelSize: Qt.application.font.pixelSize * 2
                     text: "0"
                     onClicked: codeLabel.text += text;
                 }
 
                 Button {
+                    font.pixelSize: Qt.application.font.pixelSize * 2
                     text: qsTr("CLEAR")
                     onClicked: codeLabel.text = ""
                 }
