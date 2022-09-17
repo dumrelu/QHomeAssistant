@@ -43,8 +43,6 @@ Card {
       }
   })
 
-
-
     QtObject {
         id: internal
 
@@ -65,9 +63,24 @@ Card {
             }
             return {};
         }
+
+        property bool pendingOperation: false
+
+        property Timer timer: Timer {
+            id: pendingOperationTimer
+            interval: 3 * 1000
+            running: internal.pendingOperation
+            onTriggered: internal.pendingOperation = false;
+        }
+        property var stateObject: HomeAssistant.states[root.entityId]
+        onStateObjectChanged: {
+            internal.pendingOperation = false;
+        }
     }
 
     ColumnLayout {
+        id: mainColumnLayout
+
         width: parent.width
 
         RowLayout {
@@ -151,8 +164,8 @@ Card {
                 padding: 20
 
                 onClicked: {
+                    internal.pendingOperation = true;
                     HomeAssistant.call_service("alarm_control_panel.alarm_arm_away", root.entityId);
-                    HomeAssistant.update_local_state(root.entityId, "pending")
                 }
             }
 
@@ -164,10 +177,142 @@ Card {
                 padding: 20
 
                 onClicked: {
+                    internal.pendingOperation = true;
                     HomeAssistant.call_service("alarm_control_panel.alarm_arm_home", root.entityId);
-                    HomeAssistant.update_local_state(root.entityId, "pending")
                 }
             }
+
+            RoundButton {
+                id: disarmButton
+
+                text: qsTr("DISARM")
+                visible: internal.state !== "disarmed"
+                font.pixelSize: Qt.application.font.pixelSize * 1.5
+                highlighted: true
+                padding: 20
+
+                onClicked: {
+                    internal.pendingOperation = true;
+                    HomeAssistant.call_service("alarm_control_panel.alarm_disarm", root.entityId, {"code": codeLabel.text});
+                    codeLabel.text = "";
+                }
+            }
+        }
+
+        ColumnLayout {
+            id: keypad
+
+            Layout.alignment: Qt.AlignHCenter
+            spacing: 10
+
+            visible: disarmButton.visible
+
+            Rectangle {
+                Layout.preferredWidth: root.width / 2
+                Layout.preferredHeight: codeLabel.implicitHeight * 2
+                Layout.alignment: Qt.AlignHCenter
+
+                border.width: 2
+                border.color: Material.foreground
+
+                TextEdit {
+                    id: codeLabel
+                    anchors.fill: parent
+                    anchors.margins: 5
+                    horizontalAlignment: TextEdit.AlignHCenter
+                    verticalAlignment: TextEdit.AlignVCenter
+                    font.pixelSize: Qt.application.font.pixelSize * 1.5
+                }
+            }
+
+            RowLayout {
+                Layout.alignment: Qt.AlignHCenter
+
+                Button {
+                    text: "1"
+                    onClicked: codeLabel.text += text;
+                }
+
+                Button {
+                    text: "2"
+                    onClicked: codeLabel.text += text;
+                }
+
+                Button {
+                    text: "3"
+                    onClicked: codeLabel.text += text;
+                }
+            }
+
+            RowLayout {
+                Layout.alignment: Qt.AlignHCenter
+
+                Button {
+                    text: "4"
+                    onClicked: codeLabel.text += text;
+                }
+
+                Button {
+                    text: "5"
+                    onClicked: codeLabel.text += text;
+                }
+
+                Button {
+                    text: "6"
+                    onClicked: codeLabel.text += text;
+                }
+            }
+
+            RowLayout {
+                Layout.alignment: Qt.AlignHCenter
+
+                Button {
+                    text: "7"
+                    onClicked: codeLabel.text += text;
+                }
+
+                Button {
+                    text: "8"
+                    onClicked: codeLabel.text += text;
+                }
+
+                Button {
+                    text: "9"
+                    onClicked: codeLabel.text += text;
+                }
+            }
+
+            RowLayout {
+                Layout.alignment: Qt.AlignHCenter
+
+                Item {
+                    implicitHeight: button0.implicitHeight
+                    implicitWidth: button0.implicitWidth
+                }
+
+                Button {
+                    id: button0
+                    text: "0"
+                    onClicked: codeLabel.text += text;
+                }
+
+                Button {
+                    text: qsTr("CLEAR")
+                    onClicked: codeLabel.text = ""
+                }
+            }
+        }
+    }
+
+    Rectangle {
+        anchors.fill: mainColumnLayout
+
+        visible: internal.pendingOperation
+        color: "#99333333"
+
+        BusyIndicator {
+            anchors.centerIn: parent
+            running: true
         }
     }
 }
