@@ -5,6 +5,7 @@ singleton HomeAssistant 1.0 HomeAssistant.qml
 ColoredImage 1.0 controls/ColoredImage.qml
 LightIcon 1.0 controls/LightIcon.qml
 SensorInfo 1.0 controls/SensorInfo.qml
+SwitchControl 1.0 controls/SwitchControl.qml
 
 Card 1.0 Card.qml
 AlarmCard 1.0 AlarmCard.qml
