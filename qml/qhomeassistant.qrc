@@ -20,5 +20,8 @@
         <file>icons/light_mode.svg</file>
         <file>icons/wb_twilight.svg</file>
         <file>icons/done.svg</file>
+        <file>icons/lock.svg</file>
+        <file>icons/lock_open.svg</file>
+        <file>icons/question_mark.svg</file>
     </qresource>
 </RCC>
