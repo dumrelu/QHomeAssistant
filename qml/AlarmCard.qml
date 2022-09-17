@@ -168,7 +168,7 @@ Card {
             id: actionButtons
 
             Layout.alignment: Qt.AlignHCenter
-            spacing: 10
+            spacing: 0
 
             RoundButton {
                 text: qsTr("AWAY")
