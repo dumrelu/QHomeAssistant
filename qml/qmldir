@@ -7,3 +7,4 @@ LightIcon 1.0 controls/LightIcon.qml
 OnOffSwitch 1.0 controls/OnOffSwitch.qml
 
 Card 1.0 Card.qml
+AlarmCard 1.0 AlarmCard.qml

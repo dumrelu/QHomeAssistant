@@ -12,6 +12,7 @@
         <file>icons/floor_lamp.svg</file>
         <file>icons/lightbulb.svg</file>
         <file>Card.qml</file>
+        <file>AlarmCard.qml</file>
         <file>internal/Qt5DropShadow.qml</file>
         <file>internal/Qt6DropShadow.qml</file>
         <file>controls/LightIcon.qml</file>
@@ -23,5 +24,10 @@
         <file>icons/lock.svg</file>
         <file>icons/lock_open.svg</file>
         <file>icons/question_mark.svg</file>
+        <file>icons/remove_moderator.svg</file>
+        <file>icons/safety_check.svg</file>
+        <file>icons/security.svg</file>
+        <file>icons/shield_with_house.svg</file>
+        <file>icons/notification_important.svg</file>
     </qresource>
 </RCC>
