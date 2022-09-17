@@ -42,6 +42,7 @@ Card {
           "color": Material.color(Material.Red)
       }
   })
+    property int numberOfPasscodeDigits: -1
 
     QtObject {
         id: internal
@@ -222,6 +223,13 @@ Card {
                     horizontalAlignment: TextEdit.AlignHCenter
                     verticalAlignment: TextEdit.AlignVCenter
                     font.pixelSize: Qt.application.font.pixelSize * 1.5
+
+                    onTextChanged: {
+                        if(text.length === root.numberOfPasscodeDigits)
+                        {
+                            disarmButton.clicked();
+                        }
+                    }
                 }
             }
 
