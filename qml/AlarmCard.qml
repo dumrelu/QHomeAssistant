@@ -18,27 +18,27 @@ Card {
       },
       "arming": {
           "name": qsTr("Arming"),
-          "icon": "image://mdi/remove_moderator",
+          "icon": "image://mdi/safety_check",
           "color": Material.color(Material.Orange)
       },
       "armed_home": {
           "name": qsTr("Armed home"),
-          "icon": "image://mdi/remove_moderator",
+          "icon": "image://mdi/shield_with_house",
           "color": Material.color(Material.Orange)
       },
       "armed_away": {
           "name": qsTr("Armed away"),
-          "icon": "image://mdi/remove_moderator",
+          "icon": "image://mdi/security",
           "color": Material.color(Material.Orange)
       },
       "pending": {
           "name": qsTr("Pending"),
-          "icon": "image://mdi/remove_moderator",
+          "icon": "image://mdi/safety_check",
           "color": Material.color(Material.Orange)
       },
       "triggered": {
           "name": qsTr("Triggered"),
-          "icon": "image://mdi/remove_moderator",
+          "icon": "image://mdi/notification_important",
           "color": Material.color(Material.Red)
       }
   })
@@ -76,6 +76,13 @@ Card {
         property var stateObject: HomeAssistant.states[root.entityId]
         onStateObjectChanged: {
             internal.pendingOperation = false;
+        }
+
+        property Timer clearPasscodeTimer: Timer {
+            interval: internal.timer.interval
+            onTriggered: {
+                codeLabel.text = "";
+            }
         }
     }
 
@@ -195,7 +202,7 @@ Card {
                 onClicked: {
                     internal.pendingOperation = true;
                     HomeAssistant.call_service("alarm_control_panel.alarm_disarm", root.entityId, {"code": codeLabel.text});
-                    codeLabel.text = "";
+                    internal.clearPasscodeTimer.start();
                 }
             }
         }
