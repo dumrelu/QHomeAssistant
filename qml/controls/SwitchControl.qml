@@ -19,6 +19,7 @@ Item {
         }
         return "";
     }
+    readonly property alias checked: quickSwich.checked
 
     implicitWidth: rowLayout.implicitWidth
     implicitHeight: rowLayout.implicitHeight
@@ -59,10 +60,18 @@ Item {
         }
 
         Switch {
+            id: quickSwich
             Layout.rightMargin: 10
             Layout.alignment: Qt.AlignVCenter | Qt.AlignRight
 
-            checked: HomeAssistant.state(root.entityId) !== "off"
+            checked: {
+                var haState = HomeAssistant.state(root.entityId);
+                if(haState !== "off" && haState !== "unavailable")
+                {
+                    return true;
+                }
+                return false;
+            }
 
             onClicked: {
                 var service = root.domain + ".";
