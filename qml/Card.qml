@@ -13,7 +13,7 @@ Item {
     implicitWidth: Math.max(
                        titleText.implicitWidth + titleText.anchors.leftMargin + titleText.anchors.rightMargin,
                        contentItem.implicitWidth + contentItem.anchors.leftMargin + contentItem.anchors.rightMargin)
-    implicitHeight: titleText.implicitHeight + contentItem.implicitHeight + contentItem.anchors.topMargin
+    implicitHeight: (title !== "" ? titleText.implicitHeight : 0 ) + contentItem.implicitHeight + contentItem.anchors.topMargin
 
     Rectangle {
         id: background
@@ -56,7 +56,9 @@ Item {
         anchors.rightMargin: 10
         elide: Label.ElideRight
 
-        font.pixelSize: Qt.application.font.pixelSize * 1.5
+        height: text !== "" ? implicitHeight : 0
+
+        font.pixelSize: Qt.application.font.pixelSize * 2
         font.bold: true
     }
 

@@ -51,7 +51,7 @@ Item {
         Label {
             id: stateLabel
 
-            Layout.rightMargin: 10
+            Layout.rightMargin: 20
             Layout.alignment: Qt.AlignVCenter | Qt.AlignRight
 
             elide: Text.ElideRight

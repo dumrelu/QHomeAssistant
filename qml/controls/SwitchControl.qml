@@ -62,7 +62,7 @@ Item {
             Layout.rightMargin: 10
             Layout.alignment: Qt.AlignVCenter | Qt.AlignRight
 
-            checked: HomeAssistant.state(root.entityId) === "on"
+            checked: HomeAssistant.state(root.entityId) !== "off"
 
             onClicked: {
                 var service = root.domain + ".";

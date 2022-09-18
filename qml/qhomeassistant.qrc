@@ -38,5 +38,6 @@
         <file>icons/motion_sensor_urgent.svg</file>
         <file>controls/SwitchControl.qml</file>
         <file>icons/smart_outlet.svg</file>
+        <file>icons/mode_cool.svg</file>
     </qresource>
 </RCC>
