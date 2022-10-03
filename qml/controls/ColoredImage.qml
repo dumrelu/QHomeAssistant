@@ -1,4 +1,5 @@
 import QtQuick 2.12
+import QtQuick.Controls.Material 2.12
 import QHomeAssistant 1.0
 
 Item {
@@ -6,7 +7,7 @@ Item {
 
     property alias source: image.source
     property alias sourceSize: image.sourceSize
-    property color color: "black"
+    property color color: Material.foreground
     property real intensityFactor: 1.0
 
     implicitHeight: 48

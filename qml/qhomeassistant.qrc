@@ -39,5 +39,10 @@
         <file>controls/SwitchControl.qml</file>
         <file>icons/smart_outlet.svg</file>
         <file>icons/mode_cool.svg</file>
+        <file>WeatherForecast.qml</file>
+        <file>icons/cloudy.svg</file>
+        <file>icons/partly_cloudy.svg</file>
+        <file>icons/rainy.svg</file>
+        <file>icons/sunny.svg</file>
     </qresource>
 </RCC>

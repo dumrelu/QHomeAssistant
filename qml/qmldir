@@ -9,3 +9,4 @@ SwitchControl 1.0 controls/SwitchControl.qml
 
 Card 1.0 Card.qml
 AlarmCard 1.0 AlarmCard.qml
+WeatherForecast 1.0 WeatherForecast.qml
