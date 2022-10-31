@@ -7,6 +7,21 @@ HomeAssistantImpl::HomeAssistantImpl(QObject *parent)
 
     m_api.fetchStates();
     m_api.startPolling();
+
+    auto secondsToUpdateTimer = new QTimer{ this };
+    connect(secondsToUpdateTimer, &QTimer::timeout, this,
+        [this]()
+        {
+            if(m_lastUpdateTime.isValid())
+            {
+                const auto currentTime = QDateTime::currentDateTime();
+
+                m_secondsSinceLastUpdate = m_lastUpdateTime.secsTo(currentTime);
+                emit secondsSinceLastUpdateChanged();
+            }
+        }
+    );
+    secondsToUpdateTimer->start(std::chrono::seconds{ 1 });
 }
 
 QQmlPropertyMap *HomeAssistantImpl::states()
@@ -25,6 +40,11 @@ bool HomeAssistantImpl::isQt5() const
 bool HomeAssistantImpl::isLoaded() const
 {
     return m_isLoaded;
+}
+
+int HomeAssistantImpl::secondsSinceLastUpdate() const
+{
+    return m_secondsSinceLastUpdate;
 }
 
 void HomeAssistantImpl::callService(QString service, QString entityId, QVariantMap data)
@@ -103,6 +123,8 @@ void HomeAssistantImpl::onStatesReceived(QJsonArray stateArray)
         m_isLoaded = true;
         emit isLoadedChanged();
     }
+
+    m_lastUpdateTime = QDateTime::currentDateTime();
 }
 
 void HomeAssistantImpl::onError(QString errorMessage)

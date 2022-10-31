@@ -6,9 +6,11 @@ import QHomeAssistant 1.0
 Item {
     id: root
 
+    property alias states: impl.states
+
     property alias isQt5: impl.isQt5
     property alias isLoaded: impl.isLoaded
-    property alias states: impl.states
+    property alias secondsSinceLastUpdate: impl.secondsSinceLastUpdate
 
     HomeAssistantImpl {
         id: impl

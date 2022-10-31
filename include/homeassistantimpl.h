@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QQmlPropertyMap>
+#include <QDateTime>
 
 #include "homeassistantapi.h"
 
@@ -14,12 +15,14 @@ class HomeAssistantImpl : public QObject
 
     Q_PROPERTY(bool isQt5 READ isQt5 CONSTANT)
     Q_PROPERTY(bool isLoaded READ isLoaded NOTIFY isLoadedChanged)
+    Q_PROPERTY(int secondsSinceLastUpdate READ secondsSinceLastUpdate NOTIFY secondsSinceLastUpdateChanged)
 public:
     explicit HomeAssistantImpl(QObject *parent = nullptr);
 
     QQmlPropertyMap* states();
     bool isQt5() const;
     bool isLoaded() const;
+    int secondsSinceLastUpdate() const;
 
     Q_INVOKABLE void callService(QString service, QString entityId, QVariantMap data);
     Q_INVOKABLE void updateLocalState(QString entityId, QString state);
@@ -28,12 +31,17 @@ public:
 signals:
     void statesChanged();
     void isLoadedChanged();
+    void secondsSinceLastUpdateChanged();
 
 private:
     void onStatesReceived(QJsonArray stateArray);
     void onError(QString errorMessage);
 
     bool m_isLoaded = false;
+
+    QDateTime m_lastUpdateTime;
+    int m_secondsSinceLastUpdate = -1;
+
 
     HomeAssistantApi m_api;
     QQmlPropertyMap m_states;
