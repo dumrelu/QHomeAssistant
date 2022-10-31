@@ -26,6 +26,13 @@ add_library(QHomeAssistant STATIC
     include/homeassistantimpl.h src/homeassistantimpl.cpp
 )
 
+# Enable all warnings
+if(MSVC)
+  target_compile_options(QHomeAssistant PRIVATE /W4 /WX)
+else()
+  target_compile_options(QHomeAssistant PRIVATE -Wall -Wextra -Wpedantic -Werror)
+endif()
+
 if(BUILD_EXAMPLE_PROJECT)
     add_subdirectory(ExampleProject)
 endif()
