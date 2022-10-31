@@ -110,19 +110,20 @@ Item {
                 }
             }
 
-            RowLayout {
-                Layout.alignment: Qt.AlignVCenter | Qt.AlignRight
+            //TODO
+//            RowLayout {
+//                Layout.alignment: Qt.AlignVCenter | Qt.AlignRight
 
-                ColoredImage {
-                    source: "image://mdi/water_drop"
-                }
+//                ColoredImage {
+//                    source: "image://mdi/water_drop"
+//                }
 
-                Label {
-                    text: internal.currentPrecipitation + internal.precipitationUnit
-                    font.bold: true
-                    font.pixelSize: Qt.application.font.pixelSize * 2
-                }
-            }
+//                Label {
+//                    text: internal.currentPrecipitation + internal.precipitationUnit
+//                    font.bold: true
+//                    font.pixelSize: Qt.application.font.pixelSize * 2
+//                }
+//            }
         }
 
         RowLayout {
