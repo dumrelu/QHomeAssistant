@@ -44,5 +44,7 @@
         <file>icons/partly_cloudy.svg</file>
         <file>icons/rainy.svg</file>
         <file>icons/sunny.svg</file>
+        <file>icons/device_thermostat.svg</file>
+        <file>icons/water_drop.svg</file>
     </qresource>
 </RCC>

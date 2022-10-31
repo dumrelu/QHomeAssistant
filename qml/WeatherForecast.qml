@@ -7,7 +7,6 @@ Item {
     id: root
 
     property string entityId: ""
-    property string temperatureUnit: "°C"
 
     //https://www.home-assistant.io/dashboards/weather-forecast/
     property var stateFriendlyNames: ({
@@ -46,8 +45,13 @@ Item {
     QtObject {
         id: internal
 
+        property string temperatureUnit: HomeAssistant.state_attr(entityId, "temperature_unit")
+        property string precipitationUnit: HomeAssistant.state_attr(entityId, "precipitation_unit")
+
         property string currentState: HomeAssistant.state(entityId)
         property string currentTemperature: HomeAssistant.state_attr(entityId, "temperature")
+        //TODO: Is precipitation missing?
+        property string currentPrecipitation: "-1"//HomeAssistant.state_attr(entityId, "precipitation")
 
         property var forecast: HomeAssistant.state_attr(entityId, "forecast")
 
@@ -86,19 +90,39 @@ Item {
                Layout.fillHeight: true
                Layout.fillWidth: true
            }
+        }
 
-           Column {
-               Layout.alignment: Qt.AlignVCenter | Qt.AlignRight
-               Layout.rightMargin: 10
+        RowLayout {
+//            Layout.alignment: Qt.AlignVCenter | Qt.AlignRight
+            Layout.rightMargin: 10
 
-               Label {
-                   text: internal.currentTemperature + root.temperatureUnit
-                   font.bold: true
-                   font.pixelSize: Qt.application.font.pixelSize * 2
-               }
+            RowLayout {
+                Layout.alignment: Qt.AlignVCenter | Qt.AlignLeft
 
-               //TODO: precipitation
-           }
+                ColoredImage {
+                    source: "image://mdi/device_thermostat"
+                }
+
+                Label {
+                    text: internal.currentTemperature + internal.temperatureUnit
+                    font.bold: true
+                    font.pixelSize: Qt.application.font.pixelSize * 2
+                }
+            }
+
+            RowLayout {
+                Layout.alignment: Qt.AlignVCenter | Qt.AlignRight
+
+                ColoredImage {
+                    source: "image://mdi/water_drop"
+                }
+
+                Label {
+                    text: internal.currentPrecipitation + internal.precipitationUnit
+                    font.bold: true
+                    font.pixelSize: Qt.application.font.pixelSize * 2
+                }
+            }
         }
 
         RowLayout {
@@ -124,11 +148,11 @@ Item {
                         }
 
                         Label {
-                            text: modelData["temperature"] + root.temperatureUnit
+                            text: modelData["temperature"] + internal.temperatureUnit
                         }
 
                         Label {
-                            text: modelData["templow"] + root.temperatureUnit
+                            text: modelData["templow"] + internal.temperatureUnit
                         }
                     }
                 }
