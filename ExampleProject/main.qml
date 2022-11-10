@@ -1,75 +1,120 @@
 import QtQuick 2.12
 import QtQuick.Window 2.12
 import QtQuick.Controls 2.12
+import QtQuick.Layouts 1.12
+
+// Import the qml module
 import QHomeAssistant 1.0
 
 Window {
-    width: 600
-    height: 1024
+    id: root
+
+    width: 500
+    height: 700
     visible: true
     title: qsTr("Example Project")
 
-    Rectangle {
-        anchors.fill: parent
-        color: "pink"
-    }
+    // TODO: Change me
+    property string lightId: "light.main_lights"
+    property string switchId: "fan.air_purifier"
+    property string binarySensorId: "binary_sensor.lumi_lumi_sensor_magnet_aq2_on_off"
 
 
     Column {
-        Image {
-            source: "image://mdi/light"
+        anchors.centerIn: parent
+
+        Label {
+            text: "Some examples of reusable entities: "
+            font.pixelSize: Qt.application.font.pixelSize * 2
+            font.bold: true
         }
 
-        BusyIndicator {
-            visible: true
-            running: true
-            width: 100
-            height: 100
+        Label {
+            text: "Don't forget to update the ids at the top of the qml"
+            font.pixelSize: Qt.application.font.pixelSize * 0.8
+            font.italic: true
+            color: Material.color(Material.Red)
         }
 
-        LightSlider {
-            entityId: "light.lampa"
+        RowLayout {
+            Label {
+                text: "Click on the icon to turn on/off. Click and hold to adjust: "
+            }
+
+            LightIcon {
+                entityId: root.lightId
+            }
         }
 
-        EntitiesView {
-            model: ListModel {
-                ListElement {
-                    entityId: "sensor.air_purifier_humidity"
-                }
+        RowLayout {
+            Label {
+                text: "Simple toggle entity: "
+            }
 
-                ListElement {
-                    entityId: "sensor.daikinap02467_inside_temperature"
-                    name: qsTr("Inside temperatur custom name pretty long")
-                    icon: "image://mdi/cloud"
-                }
+            SwitchControl {
+                entityId: root.switchId
+                icon.source: "image://mdi/fan"
+            }
+        }
 
-                ListElement {
-                    entityId: "binary_sensor.lumi_lumi_sensor_magnet_aq2_on_off"
-                }
+        RowLayout {
+            Label {
+                text: "Show the state of a sensor: "
+            }
+
+            SensorInfo {
+                Layout.fillWidth: true
+                name: "Door Sensor"
+                entityId: root.binarySensorId
+                icon.source: HomeAssistant.state(entityId) === "on" ? "image://mdi/door_open" : "image://mdi/door_front"
+                icon.color: HomeAssistant.state(entityId) === "on" ? Material.color(Material.Orange) : Material.foreground
+            }
+        }
+
+        Label {
+            text: "See the qml dir for more reusable types(WeatherForcast, AlarmoCard, etc)"
+            width: root.width
+            font.pixelSize: Qt.application.font.pixelSize
+            font.italic: true
+            wrapMode: Text.Wrap
+        }
+
+
+        Label {
+            text: "Some examples of using the api"
+            font.pixelSize: Qt.application.font.pixelSize * 2
+            font.bold: true
+        }
+
+        Label {
+            text: "Get the state of an entity: " + HomeAssistant.state(root.lightId)
+        }
+
+        Label {
+            text: "Get an attribute of an entity: " + HomeAssistant.state_attr(root.lightId, "brightness")
+        }
+
+        Button {
+            text: "Print the entire state of an entity(click and see the logs)"
+            onClicked: {
+                console.log(JSON.stringify(HomeAssistant.states[root.lightId]))
             }
         }
 
         Button {
-            icon.source: "image://mdi/cloud"
-            icon.width: 48
-            icon.height: 48
-
-            text: qsTr("Day Time")
-
+            text: "Call a service(See comments in the onClicked method)"
             onClicked: {
-                HomeAssistant.call_service("scene.turn_on", "scene.day_time");
-            }
-        }
+                HomeAssistant.call_service("light.turn_on", root.lightId, {"brightness": 255});
 
-        Button {
-            icon.source: "image://mdi/cloud"
-            icon.width: 48
-            icon.height: 48
-
-            text: qsTr("Before Bed")
-
-            onClicked: {
-                HomeAssistant.call_service("scene.turn_on", "scene.before_bed");
+                //Implementation note: The internal state if fetched from HomeAssistant every second(by default)
+                //So if you just call a service, the effects on the UI will be visible only after the update from
+                //HomeAssistant is received.
+                //To get over this limitation, you can pre-update the internal state using the update_local_state and
+                //update_local_attr functions.
+                //In our example, we call a service to turn on the light. So we expect that the state of the light will be
+                //changed to "on" and the "brightness" attribute to the value we just set.
+                HomeAssistant.update_local_state(root.lightId, "on");
+                HomeAssistant.update_local_attr(root.lightId, "brightness", 255);
             }
         }
     }
