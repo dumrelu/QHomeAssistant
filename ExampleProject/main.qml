@@ -16,6 +16,7 @@ Window {
 
     // TODO: Change me
     property string lightId: "light.main_lights"
+    property string switchId: "fan.air_purifier"
     property string binarySensorId: "binary_sensor.lumi_lumi_sensor_magnet_aq2_on_off"
 
 
@@ -51,7 +52,7 @@ Window {
             }
 
             SwitchControl {
-                entityId: "fan.air_purifier"
+                entityId: root.switchId
                 icon.source: "image://mdi/fan"
             }
         }
