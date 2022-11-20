@@ -65,6 +65,35 @@ Card {
             return {};
         }
 
+        property var delaySeconds: {
+            var haDelay = HomeAssistant.state_attr(root.entityId, "delay");
+            if(haDelay)
+            {
+                return haDelay;
+            }
+            return undefined;
+        }
+        property var remainingDelaySeconds: {
+            if(!internal.delaySeconds)
+            {
+                return 0;
+            }
+            return Math.max(0, internal.delaySeconds - internal.elapsedSeconds)
+        }
+        property int elapsedSeconds: 0
+
+        property Timer elapsedSecondsTimer: Timer {
+            interval: 1000
+            running: internal.delay > 0
+            repeat: true
+            onTriggered: {
+                var lastUpdateMs = Date.parse(HomeAssistant.states[root.entityId]["last_changed"])
+                var currentTime = new Date;
+
+                internal.elapsedSeconds = Math.round((currentTime.getTime() - lastUpdateMs) / 1000);
+            }
+        }
+
         property bool pendingOperation: false
 
         property Timer timer: Timer {
@@ -128,7 +157,14 @@ Card {
                 }
 
                 Label {
-                    text: root.config[internal.state].name;
+                    text: {
+                        var currentStateName = root.config[internal.state].name;
+                        if(internal.remainingDelaySeconds > 0)
+                        {
+                            currentStateName += "(" + internal.remainingDelaySeconds + "s)"
+                        }
+                        return currentStateName;
+                    }
                 }
             }
         }
@@ -138,9 +174,11 @@ Card {
 
             visible: openSensorsRepeater.count > 0
 
-            Layout.alignment: Qt.AlignHCenter
+            Layout.fillWidth: true
 
             Label {
+                Layout.fillWidth: true
+
                 font.bold: true
                 font.pixelSize: Qt.application.font.pixelSize * 1.5
 
@@ -152,6 +190,7 @@ Card {
                     }
                     return qsTr("Alarm triggered due to: ");
                 }
+                wrapMode: Label.Wrap
             }
 
             Repeater {
