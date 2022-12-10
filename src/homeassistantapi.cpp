@@ -66,6 +66,9 @@ void HomeAssistantApi::onError(QNetworkReply::NetworkError code)
 {
     qWarning() << "Network error: " << code;
     emit error("Network error. TBD");
+
+    m_getStatesReply->deleteLater();
+    m_getStatesReply = nullptr;
 }
 
 void HomeAssistantApi::onFinishedGetStates()
